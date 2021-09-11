@@ -10,10 +10,12 @@ class RetrofitInstance {
     companion object {
 
         private val retrofit by lazy {
-            val loggin = HttpLoggingInterceptor()
-            loggin.setLevel(HttpLoggingInterceptor.Level.BODY)
+            // With a HttpLoggingInterceptor, OkHttp will automatically log
+            // incoming and outgoing HTTP requests and responses to Logcat
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
-                .addInterceptor(loggin)
+                .addInterceptor(logging)
                 .build()
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
