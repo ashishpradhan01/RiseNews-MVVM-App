@@ -1,6 +1,6 @@
 package com.prime.risenews.api
 
-import com.prime.risenews.ui.NewsResponse
+import com.prime.risenews.models.NewsResponse
 import com.prime.risenews.utils.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET

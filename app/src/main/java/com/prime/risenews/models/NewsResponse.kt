@@ -1,6 +1,4 @@
-package com.prime.risenews.ui
-
-import com.prime.risenews.Article
+package com.prime.risenews.models
 
 data class NewsResponse(
     val totalResults: Int,

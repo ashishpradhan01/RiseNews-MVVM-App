@@ -1,7 +1,6 @@
-package com.prime.risenews
+package com.prime.risenews.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.prime.risenews.ui.Source
 
 @Entity(
     tableName = "articles"

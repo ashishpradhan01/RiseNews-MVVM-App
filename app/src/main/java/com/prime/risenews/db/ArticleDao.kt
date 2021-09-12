@@ -2,7 +2,7 @@ package com.prime.risenews.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.prime.risenews.Article
+import com.prime.risenews.models.Article
 
 @Dao
 interface ArticleDao {
