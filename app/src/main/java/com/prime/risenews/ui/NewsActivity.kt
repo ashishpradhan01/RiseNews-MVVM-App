@@ -3,13 +3,11 @@ package com.prime.risenews.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.prime.risenews.NewsRepository
+import com.prime.risenews.repository.NewsRepository
 import com.prime.risenews.R
 import com.prime.risenews.databinding.ActivityNewsBinding
 import com.prime.risenews.db.ArticleDatabase

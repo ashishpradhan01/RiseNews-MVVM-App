@@ -1,5 +1,6 @@
 package com.prime.risenews.adapters
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -30,15 +31,14 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         }
     }
 
-    private val differ = AsyncListDiffer(this, differCallback)
+    var differ = AsyncListDiffer(this, differCallback)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
-            ItemArticlePreviewBinding.bind(parent)
+            ItemArticlePreviewBinding.
+            inflate(LayoutInflater.from(parent.context), parent, false)
         )
-//        return ItemArticlePreviewBinding.
-//        inflate(LayoutInflater.from(parent.context), parent, false)
     }
 
     override fun getItemCount(): Int = differ.currentList.size
