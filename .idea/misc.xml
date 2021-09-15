@@ -3,12 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/drawable/image_border.xml" value="0.20833333333333334" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/activity_news.xml" value="0.178125" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_article.xml" value="0.1921875" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_breaking_news.xml" value="0.1921875" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_saved_news.xml" value="0.1921875" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_search_news.xml" value="0.1921875" />
-        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/item_article_preview.xml" value="0.479136690647482" />
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/item_article_preview.xml" value="0.25" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1921875" />
       </map>
     </option>

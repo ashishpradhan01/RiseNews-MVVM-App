@@ -8,6 +8,7 @@
         android:padding="8dp">
 
         <ImageView
+            android:background="@drawable/image_border"
             android:id="@+id/ivArticleImage"
             android:layout_width="160dp"
             android:layout_height="90dp"
@@ -64,12 +65,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSource" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#32AAAAAA"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPublishedAt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

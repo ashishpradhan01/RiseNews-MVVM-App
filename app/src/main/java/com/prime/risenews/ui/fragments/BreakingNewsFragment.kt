@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prime.risenews.R
 import com.prime.risenews.adapters.NewsAdapter
@@ -18,7 +20,7 @@ import com.prime.risenews.utils.Resource
 
 class BreakingNewsFragment : Fragment(){
     lateinit var viewModel: NewsViewModel
-    lateinit var breakingNewsBinding: FragmentBreakingNewsBinding
+    private lateinit var breakingNewsBinding: FragmentBreakingNewsBinding
     lateinit var newsAdapter: NewsAdapter
 
     val TAG = "BreakingNewsFragment"
@@ -74,6 +76,8 @@ class BreakingNewsFragment : Fragment(){
         newsAdapter = NewsAdapter()
         breakingNewsBinding.rvBreakingNews.apply {
             adapter = newsAdapter
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(activity)
         }
     }
