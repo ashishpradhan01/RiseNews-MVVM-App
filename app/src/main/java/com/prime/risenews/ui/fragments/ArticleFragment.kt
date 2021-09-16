@@ -8,6 +8,7 @@ import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.prime.risenews.R
 import com.prime.risenews.databinding.FragmentArticleBinding
 import com.prime.risenews.ui.NewsActivity
@@ -41,6 +42,9 @@ class ArticleFragment : Fragment() {
             loadUrl(article.url)
         }
 
-
+        articleBinding.fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            Snackbar.make(view, "Article saved successfully!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 }
