@@ -6,14 +6,15 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prime.risenews.NewsApplication
 import com.prime.risenews.models.Article
 import com.prime.risenews.models.NewsResponse
 import com.prime.risenews.repository.NewsRepository
+import com.prime.risenews.utils.Constants.Companion.INDIA_COUNTRY_CODE
 import com.prime.risenews.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -23,6 +24,11 @@ class NewsViewModel(
     app: Application,
     private val newsRepository : NewsRepository
 ) : AndroidViewModel(app) {
+
+    var countryCurrentCode :String = INDIA_COUNTRY_CODE
+    fun setCountryCode(countryCode:String){
+        countryCurrentCode = countryCode
+    }
 
     val breakingNews : MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
@@ -35,10 +41,11 @@ class NewsViewModel(
     var oldSearchQuery:String? = null
 
     init {
-        getBreakingNews("in")
+        getBreakingNews(countryCurrentCode)
     }
 
     fun getBreakingNews(countryCode : String) = viewModelScope.launch {
+        Log.d("viewmodel", "getBreakingNews : i am here")
         safeBreakingNewsCall(countryCode)
     }
 
@@ -110,7 +117,6 @@ class NewsViewModel(
         }
     }
 
-
     private suspend fun safeBreakingNewsCall(countryCode: String) {
         breakingNews.postValue(Resource.Loading())
         try {
@@ -127,10 +133,6 @@ class NewsViewModel(
             }
         }
     }
-
-
-
-
 
 
     private fun hasInternetConnection() : Boolean{

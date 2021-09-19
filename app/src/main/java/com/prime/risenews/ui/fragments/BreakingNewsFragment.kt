@@ -22,10 +22,15 @@ import com.prime.risenews.adapters.NewsAdapter
 import com.prime.risenews.databinding.FragmentBreakingNewsBinding
 import com.prime.risenews.ui.NewsActivity
 import com.prime.risenews.ui.NewsViewModel
+import com.prime.risenews.utils.Constants.Companion.CANADA_COUNTRY_CODE
+import com.prime.risenews.utils.Constants.Companion.CHINA_COUNTRY_CODE
+import com.prime.risenews.utils.Constants.Companion.INDIA_COUNTRY_CODE
+import com.prime.risenews.utils.Constants.Companion.JAPAN_COUNTRY_CODE
 import com.prime.risenews.utils.Constants.Companion.QUERY_PAGE_SIZE
+import com.prime.risenews.utils.Constants.Companion.UNITED_STATES_COUNTRY_CODE
 import com.prime.risenews.utils.Resource
 
-class BreakingNewsFragment : Fragment(){
+class BreakingNewsFragment : Fragment() {
     lateinit var viewModel: NewsViewModel
     private lateinit var breakingNewsBinding: FragmentBreakingNewsBinding
     lateinit var newsAdapter: NewsAdapter
@@ -37,8 +42,10 @@ class BreakingNewsFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        breakingNewsBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_breaking_news, container, false)
+        breakingNewsBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_breaking_news, container, false
+        )
         return breakingNewsBinding.root
     }
 
@@ -58,25 +65,28 @@ class BreakingNewsFragment : Fragment(){
         }
 
         viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
-            when(response){
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     hideErrorMessage()
                     response.data?.let { newsResponse ->
+                        Log.d("viewmodel", "${newsResponse.articles}")
                         newsAdapter.differ.submitList(newsResponse.articles)
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.breakingNewsPage == totalPages
-                        if (isLastPage){
+                        if (isLastPage) {
                             breakingNewsBinding.rvBreakingNews
-                                .setPadding(0,0,0,0)
+                                .setPadding(0, 0, 0, 0)
                         }
                     }
                 }
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity, "An error occurred: $message",
-                            Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            activity, "An error occurred: $message",
+                            Toast.LENGTH_LONG
+                        ).show()
                         showErrorMessage(message)
                     }
                 }
@@ -87,10 +97,35 @@ class BreakingNewsFragment : Fragment(){
         })
 
         breakingNewsBinding.itemErrorMessage.findViewById<Button>(R.id.btnRetry).setOnClickListener {
-            viewModel.getBreakingNews("us")
+                viewModel.getBreakingNews(viewModel.countryCurrentCode)
         }
-    }
 
+        breakingNewsBinding.chipGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.chipIndia -> viewModel.setCountryCode(INDIA_COUNTRY_CODE)
+                R.id.chipUs -> viewModel.setCountryCode(UNITED_STATES_COUNTRY_CODE)
+                R.id.chipJapan -> viewModel.setCountryCode(JAPAN_COUNTRY_CODE)
+                R.id.chipCanada -> viewModel.setCountryCode(CANADA_COUNTRY_CODE)
+                R.id.chipChina -> viewModel.setCountryCode(CHINA_COUNTRY_CODE)
+            }
+            viewModel.apply {
+                breakingNewsPage = 1
+                breakingNewsResponse = null
+                getBreakingNews(countryCurrentCode)
+            }
+        }
+
+        breakingNewsBinding.apply {
+            when(viewModel.countryCurrentCode){
+                INDIA_COUNTRY_CODE -> chipIndia.isChecked = true
+                UNITED_STATES_COUNTRY_CODE -> chipUs.isChecked = true
+                JAPAN_COUNTRY_CODE -> chipJapan.isChecked = true
+                CANADA_COUNTRY_CODE -> chipCanada.isChecked = true
+                CHINA_COUNTRY_CODE -> chipChina.isChecked = true
+            }
+        }
+
+    }
 
     private fun hideProgressBar(){
         breakingNewsBinding.paginationProgressBar.visibility = View.GONE
@@ -137,7 +172,7 @@ class BreakingNewsFragment : Fragment(){
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling &&isNoErrors
             if (shouldPaginate){
-                viewModel.getBreakingNews("us")
+                viewModel.getBreakingNews(viewModel.countryCurrentCode)
                 isScrolling = false
             }
         }

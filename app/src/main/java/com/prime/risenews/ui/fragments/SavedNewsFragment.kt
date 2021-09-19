@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.prime.risenews.R
 import com.prime.risenews.adapters.NewsAdapter
@@ -51,12 +53,11 @@ class SavedNewsFragment : Fragment(){
             newsAdapter.differ.submitList(it)
         })
 
-
         //Swipe to delete article
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ){
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -68,19 +69,19 @@ class SavedNewsFragment : Fragment(){
                 val article = newsAdapter.differ.currentList[position]
                 viewModel.deleteArticle(article)
                 Snackbar.make(view, "Successfully deleted article!", Snackbar.LENGTH_LONG).apply {
-                    setAction("Undo"){
+                    setAction("Undo") {
                         viewModel.saveArticle(article)
                     }
                     show()
                 }
+
+
             }
         }
         ItemTouchHelper(itemTouchHelperCallback).apply {
             attachToRecyclerView(savedNewsBinding.rvSavedNews)
         }
-
     }
-
 
     private fun setupRecyclerView(){
         newsAdapter = NewsAdapter()

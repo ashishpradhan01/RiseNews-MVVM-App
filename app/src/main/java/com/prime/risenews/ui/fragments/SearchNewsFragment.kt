@@ -78,7 +78,6 @@ class SearchNewsFragment : Fragment(){
             }
         }
 
-
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when(response){
                 is Resource.Loading -> {
@@ -107,7 +106,7 @@ class SearchNewsFragment : Fragment(){
             }
         })
         searchNewsBinding.itemErrorMessage.findViewById<Button>(R.id.btnRetry).setOnClickListener {
-            viewModel.getBreakingNews("us")
+            viewModel.getBreakingNews(viewModel.countryCurrentCode)
         }
     }
 

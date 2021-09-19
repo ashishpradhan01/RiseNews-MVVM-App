@@ -1,6 +1,7 @@
 package com.prime.risenews.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -19,6 +20,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         val articleDesc = itemView.tvDescription
         val articlePublishedAt = itemView.tvPublishedAt
         val articleSource = itemView.tvSource
+        val noImage = itemView.tvNoImage
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
@@ -46,7 +48,19 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.apply {
-            Glide.with(itemView).load(article.urlToImage).into(articleImage)
+            if(article.urlToImage.isNullOrEmpty()) noImage.visibility = View.VISIBLE
+            else {
+                try {
+                    if (article.urlToImage.contains("http")){
+                        noImage.visibility = View.GONE
+                        Glide.with(itemView).load(article.urlToImage).into(articleImage)
+                    }else{
+                        noImage.visibility = View.VISIBLE
+                    }
+                }catch (e:Exception){
+                    noImage.visibility = View.VISIBLE
+                }
+            }
             articleTitle.text = article.title
             articleDesc.text = article.description
             articlePublishedAt.text = article.publishedAt
