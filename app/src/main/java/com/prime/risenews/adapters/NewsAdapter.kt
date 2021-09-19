@@ -50,7 +50,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             articleTitle.text = article.title
             articleDesc.text = article.description
             articlePublishedAt.text = article.publishedAt
-            articleSource.text = article.source.name
+            articleSource.text = article.source?.name
             itemView.setOnClickListener {
                 onItemClickListener?.let { it(article) }
             }
