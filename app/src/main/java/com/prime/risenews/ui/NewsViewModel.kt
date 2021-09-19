@@ -1,18 +1,28 @@
 package com.prime.risenews.ui
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.*
+import android.net.NetworkCapabilities.*
+import android.os.Build
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.prime.risenews.NewsApplication
 import com.prime.risenews.models.Article
 import com.prime.risenews.models.NewsResponse
 import com.prime.risenews.repository.NewsRepository
 import com.prime.risenews.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 
 class NewsViewModel(
-    val newsRepository : NewsRepository
-) : ViewModel() {
+    app: Application,
+    private val newsRepository : NewsRepository
+) : AndroidViewModel(app) {
 
     val breakingNews : MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
@@ -21,21 +31,19 @@ class NewsViewModel(
     val searchNews : MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
     var searchNewsResponse : NewsResponse? = null
+    var newSearchQuery:String? = null
+    var oldSearchQuery:String? = null
 
     init {
         getBreakingNews("in")
     }
 
     fun getBreakingNews(countryCode : String) = viewModelScope.launch {
-        breakingNews.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
-        breakingNews.postValue(handleBreakingNewsResponse(response))
+        safeBreakingNewsCall(countryCode)
     }
 
     fun getSearchNews(searchQuery : String) = viewModelScope.launch {
-        searchNews.postValue(Resource.Loading())
-        val response = newsRepository.searchNews(searchQuery, searchNewsPage)
-        searchNews.postValue(handleSearchNewsResponse(response))
+        safeSearchNewsCall(searchQuery)
     }
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{
@@ -59,7 +67,9 @@ class NewsViewModel(
         if(response.isSuccessful){
             response.body()?.let { resultResponse ->
                 searchNewsPage++
-                if (searchNewsResponse == null){
+                if (searchNewsResponse == null || newSearchQuery != oldSearchQuery){
+                    searchNewsPage = 1
+                    oldSearchQuery = newSearchQuery
                     searchNewsResponse = resultResponse
                 }else{
                     val oldArticles = searchNewsResponse?.articles
@@ -81,4 +91,77 @@ class NewsViewModel(
     fun deleteArticle(article: Article) = viewModelScope.launch {
         newsRepository.deleteArticle(article)
     }
+
+    private suspend fun safeSearchNewsCall(searchQuery: String) {
+        newSearchQuery = searchQuery
+        searchNews.postValue(Resource.Loading())
+        try {
+            if(hasInternetConnection()) {
+                val response = newsRepository.searchNews(searchQuery, searchNewsPage)
+                searchNews.postValue(handleSearchNewsResponse(response))
+            } else {
+                searchNews.postValue(Resource.Error("No internet connection"))
+            }
+        } catch(t: Throwable) {
+            when(t) {
+                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
+                else -> searchNews.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+
+    private suspend fun safeBreakingNewsCall(countryCode: String) {
+        breakingNews.postValue(Resource.Loading())
+        try {
+            if(hasInternetConnection()) {
+                val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
+                breakingNews.postValue(handleBreakingNewsResponse(response))
+            } else {
+                breakingNews.postValue(Resource.Error("No internet connection"))
+            }
+        } catch(t: Throwable) {
+            when(t) {
+                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
+                else -> breakingNews.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+
+
+
+
+
+    private fun hasInternetConnection() : Boolean{
+        val connectivityMananger = getApplication<NewsApplication>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            val activeNetwork = connectivityMananger.activeNetwork ?: return false
+            val capabilities = connectivityMananger.getNetworkCapabilities(activeNetwork) ?: return false
+            return when {
+                capabilities.hasTransport(TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
+                capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+        }else{
+            connectivityMananger.activeNetworkInfo?.run {
+                return when(type){
+                    TYPE_WIFI -> true
+                    TYPE_MOBILE -> true
+                    TYPE_ETHERNET -> true
+                    else -> false
+                }
+            }
+        }
+        return false
+    }
+
+
+
+
+
+
 }
