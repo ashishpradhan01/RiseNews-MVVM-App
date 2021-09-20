@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,37 +29,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="India" />
+                    android:text="@string/india" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipUs"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="United states" />
+                    android:text="@string/united_states" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipJapan"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Japan" />
+                    android:text="@string/japan" />
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipCanada"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Canada" />
+                    android:text="@string/canada" />
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipChina"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="China" />
+                    android:text="@string/china" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
-
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBreakingNews"
@@ -66,6 +65,8 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingBottom="50dp"
+            tools:listitem="@layout/item_article_preview"
+            tools:itemCount="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

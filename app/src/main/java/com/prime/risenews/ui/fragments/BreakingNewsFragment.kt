@@ -9,6 +9,7 @@ import android.widget.AbsListView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -70,7 +71,6 @@ class BreakingNewsFragment : Fragment() {
                     hideProgressBar()
                     hideErrorMessage()
                     response.data?.let { newsResponse ->
-                        Log.d("viewmodel", "${newsResponse.articles}")
                         newsAdapter.differ.submitList(newsResponse.articles)
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.breakingNewsPage == totalPages
@@ -145,7 +145,9 @@ class BreakingNewsFragment : Fragment() {
     private fun showErrorMessage(message: String) {
         breakingNewsBinding.apply {
             itemErrorMessage.visibility = View.VISIBLE
-            itemErrorMessage.findViewById<TextView>(R.id.tvErrorMessage).text = message
+            itemErrorMessage.findViewById<TextView>(R.id.tvErrorMessage).apply {
+                text =  if (message.isNotEmpty()) message else getString(R.string.failed_to_connect)
+            }
         }
         isError = true
     }

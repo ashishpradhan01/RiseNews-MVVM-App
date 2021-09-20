@@ -71,7 +71,7 @@ class SearchNewsFragment : Fragment(){
             job = MainScope().launch {
                 delay(SEARCH_NEWS_TIME_DELAY)
                 editable?.let {
-                    if (editable.toString().isNotEmpty()){
+                    if (editable.isNotBlank() && editable.isNotEmpty()){
                         viewModel.getSearchNews(editable.toString())
                     }
                 }
@@ -128,7 +128,9 @@ class SearchNewsFragment : Fragment(){
     private fun showErrorMessage(message: String) {
         searchNewsBinding.apply {
             itemErrorMessage.visibility = View.VISIBLE
-            itemErrorMessage.findViewById<TextView>(R.id.tvErrorMessage).text = message
+            itemErrorMessage.findViewById<TextView>(R.id.tvErrorMessage).apply {
+                text =  if (message.isNotEmpty()) message else getString(R.string.failed_to_connect)
+            }
         }
         isError = true
     }
@@ -155,7 +157,9 @@ class SearchNewsFragment : Fragment(){
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling && isNoError
             if (shouldPaginate){
-                viewModel.getSearchNews(searchNewsBinding.etSearch.text.toString())
+                if (!searchNewsBinding.etSearch.text.isNullOrEmpty() &&
+                    searchNewsBinding.etSearch.text?.isNotBlank() == true)
+                    viewModel.getSearchNews(searchNewsBinding.etSearch.text.toString())
                 isScrolling = false
             }
         }

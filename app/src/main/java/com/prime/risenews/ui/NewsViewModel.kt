@@ -45,7 +45,7 @@ class NewsViewModel(
     }
 
     fun getBreakingNews(countryCode : String) = viewModelScope.launch {
-        Log.d("viewmodel", "getBreakingNews : i am here")
+        Log.d("viewmodel", "i am from getBreaking in viewModel")
         safeBreakingNewsCall(countryCode)
     }
 
@@ -134,14 +134,13 @@ class NewsViewModel(
         }
     }
 
-
     private fun hasInternetConnection() : Boolean{
-        val connectivityMananger = getApplication<NewsApplication>().getSystemService(
+        val connectivityManager = getApplication<NewsApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            val activeNetwork = connectivityMananger.activeNetwork ?: return false
-            val capabilities = connectivityMananger.getNetworkCapabilities(activeNetwork) ?: return false
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
             return when {
                 capabilities.hasTransport(TRANSPORT_WIFI) -> true
                 capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
@@ -149,7 +148,7 @@ class NewsViewModel(
                 else -> false
             }
         }else{
-            connectivityMananger.activeNetworkInfo?.run {
+            connectivityManager.activeNetworkInfo?.run {
                 return when(type){
                     TYPE_WIFI -> true
                     TYPE_MOBILE -> true
@@ -160,10 +159,4 @@ class NewsViewModel(
         }
         return false
     }
-
-
-
-
-
-
 }

@@ -6,12 +6,13 @@
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/drawable/image_border.xml" value="0.20833333333333334" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/activity_news.xml" value="0.178125" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_article.xml" value="0.21" />
-        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_breaking_news.xml" value="0.2" />
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_breaking_news.xml" value="0.22" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_saved_news.xml" value="0.1921875" />
-        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_search_news.xml" value="0.1921875" />
-        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/item_article_preview.xml" value="0.25" />
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/fragment_search_news.xml" value="0.35185185185185186" />
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/item_article_preview.xml" value="0.18" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/layout/item_error_message.xml" value="0.2" />
         <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1921875" />
+        <entry key="..\:/Local_Folder_E/Android/Android-Projects/RiseNews/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>
@@ -20,5 +21,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.22" />
+      </ProjectState>
+    </option>
   </component>
 </project>

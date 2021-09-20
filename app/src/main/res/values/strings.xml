@@ -3,4 +3,10 @@
     <string name="retry">Retry</string>
     <string name="search">Search...</string>
     <string name="no_image">No Image</string>
+    <string name="failed_to_connect">Failed to connect</string>
+    <string name="india">India</string>
+    <string name="united_states">United states</string>
+    <string name="japan">Japan</string>
+    <string name="canada">Canada</string>
+    <string name="china">China</string>
 </resources>
