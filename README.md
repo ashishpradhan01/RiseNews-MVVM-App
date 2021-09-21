@@ -9,7 +9,7 @@ This news app provides breaking news from five different countries India, US, Ja
 
 ## API Reference
 
-[NewsApi.org](https://newsapi.org/)
+<a href="https://newsapi.org/" target="_blank">NewsApi.org</a>
 
 #### Get Top Headlines
 
