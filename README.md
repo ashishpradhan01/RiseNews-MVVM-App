@@ -14,7 +14,7 @@ This news app provides breaking news from five different countries India, US, Ja
 #### Get Top Headlines
 
 ```http
-  GET v2/top-headlines
+  GET /v2/top-headlines
 ```
 
 | Parameter | Type     | Description                |
@@ -26,7 +26,7 @@ This news app provides breaking news from five different countries India, US, Ja
 #### Get Searched Articles
 
 ```http
-  GET v2/everything
+  GET /v2/everything
 ```
 
 | Parameter | Type     | Description                       |
