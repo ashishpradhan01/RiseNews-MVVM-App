@@ -3,7 +3,9 @@
 
 This news app provides breaking news from five different countries India, US, Japan, Canada, and China. User can search for a news and it also has a feature to save news in database. 
 
-![Logo](https://github.com/ashishpradhan01/RiseNews-MVVM-App/blob/adding_country_chips/Light_App_Icon.png?raw=true)
+<!-- ![Logo](https://github.com/ashishpradhan01/RiseNews-MVVM-App/blob/adding_country_chips/Light_App_Icon.png?raw=true) -->
+
+<img src="https://github.com/ashishpradhan01/RiseNews-MVVM-App/blob/adding_country_chips/Light_App_Icon.png?raw=true" alt="Raise News Application" width="220" height="250">
 
 ## API Reference
 
